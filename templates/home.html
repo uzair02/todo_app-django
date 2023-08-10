@@ -134,10 +134,11 @@
                 font-size: 1rem;
             }
             .card1 {
-                height: 190px;
+                height: 340px;
             }
             .card2 {
-                height: 250px;
+                height: 300px;
+                margin-top: 15px;
             }
             .add-btn {
             padding: 0.35rem 0.55rem;
@@ -170,9 +171,10 @@
                     <div class="card-header">
                         My Day
                     </div>
+                    {% for task in tasks %}
                     <div class="card-body">
                         <div class="task">
-                            <span>This is some Task</span>
+                            <span>{{ task.task }}</span>
                             <div class="task-actions">
                                 <button class="btn btn-success btn-custom-hover"><i class="fa-solid fa-check"></i><span> Mark as done!</span></button>
                                 <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> </button>
@@ -180,6 +182,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-5 col-lg-5 card2">
@@ -188,19 +191,22 @@
                         Completed Tasks
                     </div>
                     <div class="card-body">
+                        {% for cmpltd in cmpltd %}
                         <div class="task">
-                            <span>This is the completed task.</span>
+                            <span>{{ cmpltd.task }}</span>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
         <div class="row row2">
             <div class="col-md-6 col-lg-6 px-3" style="position: absolute; bottom: 50px;">
-                <form action="">
+                <form action="{% url 'addTask' %}" method="POST">
+                    {% csrf_token %}
                     <div class="task-input">
-                        <input type="text" class="form-control" placeholder="Add a task">
-                        <button class="add-btn"><i class="fa-solid fa-plus"></i> Add</button>
+                        <input type="text" name="task" class="form-control" placeholder="Add a task">
+                        <button type="submit" class="add-btn"><i class="fa-solid fa-plus"></i> Add</button>
                     </div>
                 </form>
             </div>
